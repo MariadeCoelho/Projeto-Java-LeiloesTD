@@ -65,8 +65,6 @@
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="venderBotao" min="-2" pref="246" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" pref="144" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
@@ -80,10 +78,7 @@
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="369" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="venderBotao" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jButton1" min="-2" pref="37" max="-2" attributes="0"/>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -131,14 +126,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="venderBotao">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Vender"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="venderBotaoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

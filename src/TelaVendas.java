@@ -1,10 +1,14 @@
 
- 
+ import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 public class TelaVendas extends javax.swing.JFrame {
 
    
     public TelaVendas() {
         initComponents();
+        listarProdutosVendidos();
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -16,7 +20,6 @@ public class TelaVendas extends javax.swing.JFrame {
         produtoTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        venderBotao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,13 +61,6 @@ public class TelaVendas extends javax.swing.JFrame {
             }
         });
 
-        venderBotao.setText("Vender");
-        venderBotao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                venderBotaoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -79,8 +75,6 @@ public class TelaVendas extends javax.swing.JFrame {
                 .addContainerGap(163, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(venderBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(104, 104, 104)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -92,9 +86,7 @@ public class TelaVendas extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(venderBotao))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -125,21 +117,6 @@ public class TelaVendas extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_produtoTableAncestorAdded
-
-    private void venderBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_venderBotaoActionPerformed
-        
-        int selectedRow = produtoTable.getSelectedRow();
-        if (selectedRow != -1) {
-            int produtoId = (int) produtoTable.getValueAt(selectedRow, 0); 
-            ProdutosDAO produtosDAO = new ProdutosDAO();
-            produtosDAO.venderProduto(produtoId);
-            atualizarTabelaProdutos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um produto para vender.");
-        }
-    
-
-    }//GEN-LAST:event_venderBotaoActionPerformed
 
   
     public static void main(String args[]) {
@@ -173,6 +150,27 @@ public class TelaVendas extends javax.swing.JFrame {
             }
         });
     }
+    private void listarProdutosVendidos(){
+        try {
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            
+            DefaultTableModel model = (DefaultTableModel) produtoTable.getModel();
+            model.setNumRows(0);
+            
+            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutosVendidos();
+            
+            for(int i = 0; i < listagem.size(); i++){
+                model.addRow(new Object[]{
+                    listagem.get(i).getId(),
+                    listagem.get(i).getNome(),
+                    listagem.get(i).getValor(),
+                    listagem.get(i).getStatus()
+                });
+            }
+        } catch (Exception e) {
+        }
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -180,6 +178,5 @@ public class TelaVendas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable produtoTable;
-    private javax.swing.JButton venderBotao;
     // End of variables declaration//GEN-END:variables
 }
