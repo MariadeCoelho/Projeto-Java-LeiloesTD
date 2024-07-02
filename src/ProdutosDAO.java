@@ -1,5 +1,6 @@
 
 
+import java.sql.Statement;
 import java.awt.List;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class ProdutosDAO {
     
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
-    public void cadastrarProduto (ProdutosDTO produto){
+public void cadastrarProduto (ProdutosDTO produto){
     conn = new conectaDAO().connectDB();
     try{
      st = conn.prepareStatement("INSERT INTO produtos (nome, valor,status) VALUES (?,?,?)");
@@ -41,30 +42,13 @@ public class ProdutosDAO {
         } catch (SQLException e){
          JOptionPane.showMessageDialog(null, "Erro ao fechar conexão: " + e.getMessage());
         }
-    
-    
-    
-    
     }
-    
-    
-    
-    
-    
-    
-    
     }
-        
-        
-        
-       
+
+public ArrayList<ProdutosDTO> listarProdutos(){
+ArrayList<ProdutosDTO> produtos = new ArrayList<>();
  
-    
-    public ArrayList<ProdutosDTO> listarProdutos(){
-        ArrayList<ProdutosDTO> produtos = new ArrayList<>();
-        conn = new conectaDAO().connectDB();
-        
-        try {
+     try {  conn = new conectaDAO().connectDB();
          st = conn.prepareStatement("SELECT id, nome , valor, status FROM produtos");
          rs = st.executeQuery();
         while (rs.next()) {
@@ -86,25 +70,52 @@ public class ProdutosDAO {
                 JOptionPane.showMessageDialog(null, "Erro ao fechar conexão: " + e.getMessage());
             }
         }
-        
         return produtos;
-    }
-        
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-    
-    
-    
-        
 }
 
+public  void venderProduto(int produtoId){
+String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+
+try (Connection conn = new conectaDAO().connectDB();
+PreparedStatement pst = conn.prepareStatement (sql)){
+pst.setInt(1,produtoId);
+pst.executeUpdate();
+
+} catch (SQLException e){
+System.out.println(e.getMessage());
+
+}
+}
+
+public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
+
+try(Connection conn = new conectaDAO().connectDB();
+Statement stm = conn.createStatement();
+ResultSet rs = stm.executeQuery(sql)){
+while (rs.next()){
+ProdutosDTO produto = new ProdutosDTO();
+produto.setId(rs.getInt("id"));
+produto.setNome(rs.getString("nome"));
+produto.setValor(rs.getInt("valor"));
+
+produto.setStatus(rs.getString("Status"));
+produtosVendidos.add(produto);
+}
+
+} catch(SQLException e){
+System.out.println(e.getMessage());
+
+}
+return produtosVendidos;
+
+}
+
+
+
+
+
+
+}  
+    
