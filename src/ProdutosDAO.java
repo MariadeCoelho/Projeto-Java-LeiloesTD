@@ -47,8 +47,8 @@ public void cadastrarProduto (ProdutosDTO produto){
 
 public ArrayList<ProdutosDTO> listarProdutos(){
 ArrayList<ProdutosDTO> produtos = new ArrayList<>();
-conn = new conectaDAO().connectDB();
-     try {
+ 
+     try {  conn = new conectaDAO().connectDB();
          st = conn.prepareStatement("SELECT id, nome , valor, status FROM produtos");
          rs = st.executeQuery();
         while (rs.next()) {
