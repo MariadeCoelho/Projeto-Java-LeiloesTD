@@ -73,8 +73,43 @@ conn = new conectaDAO().connectDB();
         return produtos;
 }
 
+public  void venderProduto(int produtoId){
+String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
 
+try (Connection conn = new conectaDAO().connectDB();
+PreparedStatement pst = conn.prepareStatement (sql)){
+pst.setInt(1,produtoId);
+pst.executeUpdate();
 
+} catch (SQLException e){
+System.out.println(e.getMessage());
+
+}
+}
+public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
+
+try(Connection conn = new conectaDAO().connectDB();
+Statement stm = conn.createStatement();
+ResultSet rs = stm.executeQuery(sql)){
+while (rs.next()){
+ProdutosDTO produto = new ProdutosDTO();
+produto.setId(rs.getInt("id"));
+produto.setNome(rs.getString("nome"));
+produto.setValor(rs.getInt("valor"));
+
+produto.setStatus(rs.getString("Status"));
+produtosVendidos.add(produto);
+}
+
+} catch(SQLException e){
+System.out.println(e.getMessage());
+
+}
+return produtosVendidos;
+
+}
 
 
 
