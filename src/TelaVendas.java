@@ -13,9 +13,10 @@ public class TelaVendas extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        produtoTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        venderBotao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -23,7 +24,7 @@ public class TelaVendas extends javax.swing.JFrame {
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setName(""); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        produtoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -34,16 +35,16 @@ public class TelaVendas extends javax.swing.JFrame {
                 "Id", "Nome", "Valor", "Status"
             }
         ));
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        produtoTable.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
+                produtoTableAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(produtoTable);
 
         jLabel1.setFont(new java.awt.Font("MS UI Gothic", 3, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -54,6 +55,13 @@ public class TelaVendas extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        venderBotao.setText("Vender");
+        venderBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                venderBotaoActionPerformed(evt);
             }
         });
 
@@ -71,6 +79,8 @@ public class TelaVendas extends javax.swing.JFrame {
                 .addContainerGap(163, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(venderBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -82,7 +92,9 @@ public class TelaVendas extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(venderBotao))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -108,10 +120,26 @@ public class TelaVendas extends javax.swing.JFrame {
     this.dispose();    
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+    private void produtoTableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_produtoTableAncestorAdded
    
         
-    }//GEN-LAST:event_jTable1AncestorAdded
+        
+    }//GEN-LAST:event_produtoTableAncestorAdded
+
+    private void venderBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_venderBotaoActionPerformed
+        
+        int selectedRow = produtoTable.getSelectedRow();
+        if (selectedRow != -1) {
+            int produtoId = (int) produtoTable.getValueAt(selectedRow, 0); 
+            ProdutosDAO produtosDAO = new ProdutosDAO();
+            produtosDAO.venderProduto(produtoId);
+            atualizarTabelaProdutos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um produto para vender.");
+        }
+    
+
+    }//GEN-LAST:event_venderBotaoActionPerformed
 
   
     public static void main(String args[]) {
@@ -151,6 +179,7 @@ public class TelaVendas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable produtoTable;
+    private javax.swing.JButton venderBotao;
     // End of variables declaration//GEN-END:variables
 }
