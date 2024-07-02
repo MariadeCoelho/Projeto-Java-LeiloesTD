@@ -1,5 +1,6 @@
 
 
+import java.sql.Statement;
 import java.awt.List;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ public class ProdutosDAO {
     
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
-    public void cadastrarProduto (ProdutosDTO produto){
+public void cadastrarProduto (ProdutosDTO produto){
     conn = new conectaDAO().connectDB();
     try{
      st = conn.prepareStatement("INSERT INTO produtos (nome, valor,status) VALUES (?,?,?)");
@@ -41,30 +42,13 @@ public class ProdutosDAO {
         } catch (SQLException e){
          JOptionPane.showMessageDialog(null, "Erro ao fechar conexão: " + e.getMessage());
         }
-    
-    
-    
-    
     }
-    
-    
-    
-    
-    
-    
-    
     }
-        
-        
-        
-       
- 
-    
-    public ArrayList<ProdutosDTO> listarProdutos(){
-        ArrayList<ProdutosDTO> produtos = new ArrayList<>();
-        conn = new conectaDAO().connectDB();
-        
-        try {
+
+public ArrayList<ProdutosDTO> listarProdutos(){
+ArrayList<ProdutosDTO> produtos = new ArrayList<>();
+conn = new conectaDAO().connectDB();
+     try {
          st = conn.prepareStatement("SELECT id, nome , valor, status FROM produtos");
          rs = st.executeQuery();
         while (rs.next()) {
@@ -86,25 +70,16 @@ public class ProdutosDAO {
                 JOptionPane.showMessageDialog(null, "Erro ao fechar conexão: " + e.getMessage());
             }
         }
-        
         return produtos;
-    }
-        
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-    
-    
-    
-        
 }
 
+
+
+
+
+
+
+
+
+}  
+    
